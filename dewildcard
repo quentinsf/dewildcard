@@ -1,0 +1,37 @@
+#! /usr/bin/env python
+#
+# Remove wildcard imports from Python code.
+#
+# Takes Python code on stdin and copies it to stdout,
+# replacing any 'from foo import *' with a multi-line
+# import of all the symbols in foo.
+#
+# You can then use pylint or similar to identify and 
+# delete the unneeded symbols.
+#
+# See http://github.com/quentinsf/dewildcard for info.
+#
+# Quentin Stafford-Fraser, 2015
+
+import importlib
+import re
+import sys
+
+import_all_re = re.compile(r'^\s*from\s*([\w.]*)\s*import\s*[*]')
+
+def import_all_string(module_name):
+    importlib.import_module(module_name)
+    import_line = 'from %s import ( %%s )\n' % module_name
+    length = len(import_line) - 5
+    return import_line % (',\n' + length * ' ').join(
+        [a for a in dir(sys.modules[module_name]) if not a.startswith('_')] )
+
+def main():
+    for line in sys.stdin:
+        match = import_all_re.match(line)
+        if match:
+            line = import_all_string(match.group(1))
+        sys.stdout.write(line)
+
+if __name__ == '__main__':
+    main()

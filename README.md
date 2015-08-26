@@ -1,5 +1,7 @@
 # Dewildcard
 
+## Background
+
 In Python, wildcard import statements, such as:
 
     from foo import *
@@ -25,6 +27,12 @@ You can then easily go through and delete any items that pylint tells you aren't
 
 The parentheses are there to allow it to span multiple lines, but it shouldn't be too difficult to change the code to make it a single line or to use backslashes for line continuation if you prefer that.
 
+## Installation
+
+    pip install dewildcard
+
+Note that dewildcard makes use of importlib, so Python 2.7 or later will be needed.
+
 ## Example usage
 
     dewildcard  < my_old_code.py  > my_new_code.py
@@ -35,11 +43,12 @@ This has many limitations, the main one being that dewildcard must actually perf
 
 Dewildcard is based on an initial idea from Alexandre Fayolle - thanks, Alexandre!
 
-# Licence
+## Licence
 
-Such a simple script is barely worth a licence, but it's Gnu Publice Licence v2.  Use at your own risk, etc.
+Such a simple script is barely worth a licence, but, for what it's worth, it's released under GNU Publice Licence v2.  Use at your own risk, etc.
 
 (c) 2015 Quentin Stafford-Fraser
+
 
 
 

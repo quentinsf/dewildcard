@@ -6,31 +6,45 @@
 # replacing any 'from foo import *' with a multi-line
 # import of all the symbols in foo.
 #
-# You can then use pylint or similar to identify and 
+# You can then use pylint or similar to identify and
 # delete the unneeded symbols.
 #
 # See http://github.com/quentinsf/dewildcard for info.
 #
 # Quentin Stafford-Fraser, 2015
 
+import argparse
 import importlib
 import re
 import sys
 
 import_all_re = re.compile(r'^\s*from\s*([\w.]*)\s*import\s*[*]')
 
-def import_all_string(module_name):
+def import_all_string(module_name, single_line):
     importlib.import_module(module_name)
-    import_line = 'from %s import ( %%s )\n' % module_name
-    length = len(import_line) - 5
-    return import_line % (',\n' + length * ' ').join(
+    if single_line:
+        import_line = 'from %s import %%s\n' % module_name
+        length = 0
+        separator = ', '
+    else:
+        import_line = 'from %s import ( %%s )\n' % module_name
+        length = len(import_line) - 5
+        separator = ',\n'
+
+    return import_line % (separator + length * ' ').join(
         [a for a in dir(sys.modules[module_name]) if not a.startswith('_')] )
 
 def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        '--single-line',
+        help="Write imports on a single line",
+        action="store_true")
+    arguments = parser.parse_args()
     for line in sys.stdin:
         match = import_all_re.match(line)
         if match:
-            line = import_all_string(match.group(1))
+            line = import_all_string(match.group(1), arguments.single_line)
         sys.stdout.write(line)
 
 if __name__ == '__main__':

@@ -25,6 +25,9 @@ This little script reads some python code on stdin and, when it finds a wildcard
 
 You can then easily go through and delete any items that pylint tells you aren't needed.
 
+If you prefer a single (possibly long) import line, you can use the `--single-line` option.
+One advantage is that some tools such as autoflake and autopep8 handle this format better.
+
 The parentheses are there to allow it to span multiple lines, but it shouldn't be too difficult to change the code to make it a single line or to use backslashes for line continuation if you prefer that.
 
 ## Installation
@@ -56,7 +59,3 @@ Lots of room for improvements here, including:
 Such a simple script is barely worth a licence, but, for what it's worth, it's released under GNU Publice Licence v2.  Use at your own risk, etc.
 
 (c) 2015 Quentin Stafford-Fraser
-
-
-
-

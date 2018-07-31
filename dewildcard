@@ -36,16 +36,20 @@ def import_all_string(module_name, single_line):
 
 def main():
     parser = argparse.ArgumentParser()
+    parser.add_argument('file', type=argparse.FileType('r+'), help='Input file')
     parser.add_argument(
         '--single-line',
         help="Write imports on a single line",
         action="store_true")
-    arguments = parser.parse_args()
-    for line in sys.stdin:
+    args = parser.parse_args()
+    parsed_lines = []
+    for line in args.file:
         match = import_all_re.match(line)
         if match:
-            line = import_all_string(match.group(1), arguments.single_line)
-        sys.stdout.write(line)
+            line = import_all_string(match.group(1), args.single_line)
+        parsed_lines.append(line)
+    args.file.truncate()
+    args.file.writelines(parsed_lines)
 
 if __name__ == '__main__':
     main()

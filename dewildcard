@@ -18,7 +18,13 @@ import importlib
 import re
 import sys
 
-import_all_re = re.compile(r'^\s*from\s*([\w.]*)\s*import\s*[*]')
+def rw_file(arg):
+    try:
+        open(arg)
+        open(arg, 'a')
+    except IOError as e:
+        raise argparse.ArgumentTypeError(e)
+    return arg
 
 def import_all_string(module_name, single_line):
     importlib.import_module(module_name)
@@ -36,20 +42,24 @@ def import_all_string(module_name, single_line):
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument('file', type=argparse.FileType('r+'), help='Input file')
+    parser.add_argument('file', type=rw_file, help='Input file')
     parser.add_argument(
         '--single-line',
         help="Write imports on a single line",
         action="store_true")
     args = parser.parse_args()
+
+    import_all_re = re.compile(r'^\s*from\s*([\w.]*)\s*import\s*[*]')
     parsed_lines = []
-    for line in args.file:
-        match = import_all_re.match(line)
-        if match:
-            line = import_all_string(match.group(1), args.single_line)
-        parsed_lines.append(line)
-    args.file.truncate()
-    args.file.writelines(parsed_lines)
+    with open(args.file) as f:
+        for line in f:
+            match = import_all_re.match(line)
+            if match:
+                line = import_all_string(match.group(1), args.single_line)
+            parsed_lines.append(line)
+
+    with open(args.file, 'w') as f:
+        f.writelines(parsed_lines)
 
 if __name__ == '__main__':
     main()

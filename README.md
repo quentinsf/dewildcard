@@ -54,6 +54,6 @@ Lots of room for improvements here, including:
 
 ## Licence
 
-Such a simple script is barely worth a licence, but, for what it's worth, it's released under GNU Publice Licence v2.  Use at your own risk, etc.
+Such a simple script is barely worth a licence, but, for what it's worth, it's released under GNU General Public Licence v2.  Use at your own risk, etc.
 
 (c) 2015 Quentin Stafford-Fraser

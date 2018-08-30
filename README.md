@@ -38,7 +38,7 @@ Note that dewildcard makes use of importlib, so Python 2.7 or later will be need
 
 ## Example usage
 
-    dewildcard  < my_old_code.py  > my_new_code.py
+    dewildcard my_code.py
 
 ## Notes
 
@@ -51,8 +51,6 @@ Dewildcard is based on an initial idea from Alexandre Fayolle - thanks, Alexandr
 Lots of room for improvements here, including:
 
 * Options to change the output format
-* A `-h` option to display the syntax
-* The ability to specify the input file as an argument.
 
 ## Licence
 

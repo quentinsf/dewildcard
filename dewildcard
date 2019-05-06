@@ -52,10 +52,17 @@ def main():
     import_all_re = re.compile(r'^\s*from\s*([\w.]*)\s*import\s*[*]')
     parsed_lines = []
     with open(args.file) as f:
-        for line in f:
+        for i, line in enumerate(f):
             match = import_all_re.match(line)
             if match:
-                line = import_all_string(match.group(1), args.single_line)
+                try
+                    line = import_all_string(match.group(1), args.single_line)
+                except:
+                    print('ERROR occured while parsing: {}, line {}'.format(args.file, i))
+                    print(' {}'.format(line.splitlines()[0]))
+                    print(' matching group: >>{}<<'.format(match.group(1)))
+                    print('')
+                    raise
             parsed_lines.append(line)
 
     dest = open(args.file, 'w') if args.write else sys.stdout

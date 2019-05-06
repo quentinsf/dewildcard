@@ -55,7 +55,7 @@ This outputs the modified file to stdout.  If you wish to modify it in place, ad
 
 Dewildcard is based on an initial idea from Alexandre Fayolle - thanks, Alexandre!
 
-Other contributors include Jan Bieroń and Jakub Wilk - thanks!
+Other contributors include Jan Bieroń, Jakub Wilk and Benedek Racz - thanks!
 
 ## To Do
 

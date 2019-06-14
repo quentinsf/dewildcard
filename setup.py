@@ -9,7 +9,7 @@ setup(
     name="dewildcard",
     # packages = ['dewildcard'],
     scripts=['dewildcard'],
-    version="0.2.1",
+    version="0.2.2",
     description="Expand wildcard imports in Python code",
     long_description=long_description,
     long_description_content_type="text/markdown",

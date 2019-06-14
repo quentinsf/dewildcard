@@ -36,6 +36,17 @@ The parentheses are there to allow it to span multiple lines, but it shouldn't b
 
 NOTE: This has many limitations, the main one being that dewildcard must actually *perform* the imports in order to extract the symbol names, so you must run this in an environment where the appropriate modules exist, are on the Python path, and can be imported without unfortunate side-effects.
 
+NOTE 2:  Another increasingly-important limitation is that it won't currently cope with _relative_ imports.  If your code says:
+
+    from .foo import *
+
+then Python needs to know the starting point from which to calculate the relative locations.  
+I've made some progress in this direction: you can try running this as a module and specifying a base package, but it's not quite right yet:
+
+    mv dewildcard dewildcard.py
+    python -m dewildcard --relative_to dir1.foo dir1/foo.py
+
+
 
 ## Installation
 
@@ -68,3 +79,4 @@ Lots of room for improvements here, including:
 Such a simple script is barely worth a licence, but, for what it's worth, it's released under GNU General Public Licence v2.  Use at your own risk, etc.
 
 (c) 2015 Quentin Stafford-Fraser
+Occasional updates since then.
